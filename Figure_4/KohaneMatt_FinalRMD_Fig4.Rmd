@@ -1,0 +1,126 @@
+---
+title: "FinalRMD"
+author: "Matt Kohane"
+date: "December 8, 2019"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+##imports 
+```{r}
+library("phyloseq"); packageVersion("phyloseq")
+library("ggplot2"); packageVersion("ggplot2")
+```
+
+
+
+##Reading RDS Data
+```{r}
+#phy
+calyx <- readRDS("calyx_end.RDS")
+fruit_pulp <- readRDS("fruit_pulp.RDS")
+peel <- readRDS("peel.RDS")
+seeds <- readRDS("seeds.RDS")
+stem <- readRDS("Stem.RDS")
+stem_end <- readRDS("Stem_end.RDS")
+```
+
+##Merge RDS Data
+```{r}
+tissues <- merge_phyloseq(calyx, fruit_pulp, peel, seeds, stem, stem_end)
+```
+
+##Calculate 0.01 taxa abundance in total tissue data
+```{r}
+tissues = subset_taxa(tissues, Genus != "-1")
+samplesThreshold <- ntaxa(tissues) * 0.01
+pruned <- prune_samples(sample_sums(tissues) >= samplesThreshold, tissues)
+```
+
+##Network analysis plots
+```{r}
+sample_names(pruned)
+```
+
+##Total Tissue plot
+
+##Phylum plots
+```{r}
+tissue_network1 <- make_network(pruned, type = "taxa", max.dist = 0.4)
+plot_network(tissue_network1,pruned, type="taxa", label=NULL, color="Phylum", line_weight = 0.4)
+```
+
+##Samples plot
+```{r}
+tissue_network2 <- make_network(pruned, type = "samples", max.dist = .7)
+plot_network(tissue_network2, pruned, type="samples", label="mngmt", color="tissue", line_weight = 0.4)
+```
+
+## Seed plot
+```{r}
+seeds = subset_taxa(seeds, Genus != "-1")
+samplesThreshold <- ntaxa(seeds) * 0.01
+pruned_seeds <- prune_samples(sample_sums(seeds) >= samplesThreshold, seeds)
+```
+```{r}
+seeds_network <- make_network(pruned_seeds, type = "taxa", max.dist = 0.4)
+plot_network(seeds_network,pruned_seeds, type="taxa", label=NULL, color="Phylum", line_weight = 0.4)
+```
+
+##Peel plot
+```{r}
+peel = subset_taxa(seeds, Genus != "-1")
+samplesThreshold <- ntaxa(peel) * 0.01
+pruned_peel <- prune_samples(sample_sums(peel) >= samplesThreshold, peel)
+```
+```{r}
+peel_network <- make_network(pruned_peel, dist.fun="bray", type = "taxa", max.dist = 0.4)
+plot_network(network,pruned_peel, type="taxa", label=NULL, color="Phylum", line_weight = 0.4)
+```
+
+##Calyx plot
+```{r}
+calyx = subset_taxa(calyx, Genus != "-1")
+samplesThreshold <- ntaxa(calyx) * 0.01
+pruned_calyx <- prune_samples(sample_sums(calyx) >= samplesThreshold, calyx)
+```
+```{r}
+calyx_network <- make_network(pruned_calyx, dist.fun="bray", type = "taxa", max.dist = 0.4)
+plot_network(calyx_network,pruned_calyx, type="taxa", label=NULL, color="Phylum", line_weight = 0.4)
+```
+
+##Fruit Pulp
+```{r}
+fruit_pulp = subset_taxa(fruit_pulp, Genus != "-1")
+samplesThreshold <- ntaxa(fruit_pulp) * 0.01
+pruned_fruit_pulp <- prune_samples(sample_sums(fruit_pulp) >= samplesThreshold, fruit_pulp)
+```
+```{r}
+fruit_pulp_network <- make_network(pruned_fruit_pulp, dist.fun="bray", type = "taxa", max.dist = 0.4)
+plot_network(fruit_pulp_network,pruned_fruit_pulp, type="taxa", label=NULL, color="Phylum", line_weight = 0.4)
+```
+
+##Stem
+```{r}
+stem = subset_taxa(stem, Genus != "-1")
+samplesThreshold <- ntaxa(stem) * 0.01
+pruned_stem <- prune_samples(sample_sums(stem) >= samplesThreshold, stem)
+```
+```{r}
+stem_network <- make_network(pruned_stem, dist.fun="bray", type = "taxa", max.dist = 0.4)
+plot_network(stem_network,pruned_stem, type="taxa", label=NULL, color="Phylum", line_weight = 0.4)
+```
+
+##Stem End
+```{r}
+stem_end = subset_taxa(stem_end, Genus != "-1")
+samplesThreshold <- ntaxa(stem_end) * 0.01
+pruned_stem_end <- prune_samples(sample_sums(stem_end) >= samplesThreshold, stem_end)
+```
+```{r}
+stem_end_network <- make_network(pruned_stem_end, dist.fun="bray", type = "taxa", max.dist = 0.4)
+plot_network(stem_end_network,pruned_stem_end, type="taxa", label=NULL, color="Phylum", line_weight = 0.4)
+```
