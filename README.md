@@ -13,6 +13,9 @@ Using this Repository:
 1. Familiarize yourself with the original paper.
 2. Install R studio.
 3. Use read_phyloseq.R to read the phyloseq object containing the data (seeds.RDS or apples.RDS) into R.
+4. Use Build_Pyloseq_Obj_Pipeline.rmd to input the raw unzipped FASTQ files from the ENA website and convert them to phyloseq objects with or without phylogenic trees. 
+5. Use Clean_out_low_abundance_taxa.rmd to threshold taxa which have above .01% read counts and convert the phyloseq objects to dataframes.
+6. Use each 'figure' folder to observe the pipelines build for recreating each figure and thier outputs. 
 
 Information about Taxonomy Assignment:
 
