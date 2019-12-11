@@ -17,6 +17,9 @@ Using this Repository:
 5. Use Clean_out_low_abundance_taxa.rmd to threshold taxa which have above .01% read counts and convert the phyloseq objects to dataframes.
 6. Use each 'figure' folder to observe the pipelines build for recreating each figure and thier outputs. 
 
+Google slides link to the group presentation: 
+https://docs.google.com/presentation/d/1bbyDAFCzph1Qie8yYEIcYgdkOCcQ6hdhQGd9d4DM_qo/edit?usp=sharing
+
 Information about Taxonomy Assignment:
 
 1. Download zipped fastq files from the ENA.
